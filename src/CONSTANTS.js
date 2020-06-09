@@ -1,0 +1,1 @@
+export const providedAPI = "https://jsonplaceholder.typicode.com/comments";

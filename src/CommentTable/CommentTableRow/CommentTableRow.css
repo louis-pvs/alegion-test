@@ -1,0 +1,29 @@
+.comment-table-row {
+  display: inline-block;
+  width: 100%;
+}
+
+.comment-table-row__highlight {
+  background-color: yellow;
+}
+
+.comment-table-row__col {
+  box-sizing: border-box;
+  padding: 5px 10px;
+  float: left;
+}
+
+.comment-table-row::after {
+  content: "";
+  display: table;
+  width: 100%;
+  clear: both;
+}
+
+.comment-table-row__col--email {
+  width: 30%;
+}
+
+.comment-table-row__col--body {
+  width: 70%;
+}

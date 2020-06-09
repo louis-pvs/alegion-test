@@ -1,0 +1,8 @@
+/node_modules
+/build
+/npm-debug.log*
+/test-results.xml
+
+tmp
+.DS_Store
+__MACOSX/

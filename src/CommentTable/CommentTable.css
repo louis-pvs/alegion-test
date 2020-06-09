@@ -1,0 +1,39 @@
+.comment-table__header-row {
+  display: inline-block;
+  width: 100%;
+}
+
+.comment-table__header-row__col {
+  box-sizing: border-box;
+  padding: 5px 10px;
+  float: left;
+}
+
+.comment-table__header-row::after {
+  content: "";
+  display: table;
+  width: 100%;
+  clear: both;
+}
+
+.comment-table__header-row__col--email {
+  width: 30%;
+}
+
+.comment-table__header-row__col--body {
+  width: 70%;
+}
+
+.comment-table__header-btn {
+  background: transparent;
+  border: 0 solid transparent;
+  padding: 0;
+  outline: 0;
+}
+.comment-table__header-btn__span {
+  vertical-align: middle;
+}
+.comment-table__header-btn__icon {
+  margin-right: 10px;
+  vertical-align: middle;
+}
