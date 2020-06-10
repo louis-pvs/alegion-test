@@ -37,3 +37,8 @@
   margin-right: 10px;
   vertical-align: middle;
 }
+
+.comment-table__body {
+  position: relative;
+  height: 70vh;
+}

@@ -9,6 +9,7 @@ import "./App.css";
 import "./Icon.css";
 
 const App = () => {
+  const [requestError, setRequestError] = useState(false);
   const [loading, setLoading] = useState(false);
   const [comments, setComments] = useState(null);
   const [filteredComments, setFilteredComments] = useState(null);
@@ -18,9 +19,10 @@ const App = () => {
 
   useEffect(() => {
     setLoading(true);
-    getComment().then(([_, datas]) => {
+    getComment().then(([err, datas]) => {
       setLoading(false);
-      setComments(datas);
+      if (err) setRequestError(err);
+      else setComments(datas);
     });
   }, []);
   useEffect(() => {
@@ -56,8 +58,8 @@ const App = () => {
     if (sorter) {
       commentList = sortComments(commentList, sorter);
     }
-    // if (err) return <p>{err}</p>;
-    if (loading) return <Loading />;
+    if (requestError) return <p>{requestError}</p>;
+    else if (loading) return <Loading />;
     return (
       <>
         <SearchField onInputChange={onFilterChange} inputValue={searchTerm} />

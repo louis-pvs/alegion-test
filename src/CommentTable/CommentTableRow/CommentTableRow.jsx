@@ -10,7 +10,7 @@ export const CommentTableRow = ({
 }) => {
   const highlightContent = (content) => {
     if (!highlight) return content;
-    const strArr = content.split(highlight);
+    const strArr = content.toLowerCase().split(highlight.toLowerCase());
     const joinArr = strArr.map((str, index) => (
       <>
         {str}

@@ -1,9 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import propTypes from "prop-types";
 import classnames from "classnames";
 import CommentTableRow from "./CommentTableRow";
-import VirtualList from "react-tiny-virtual-list";
+import {
+  List,
+  AutoSizer,
+  CellMeasurer,
+  CellMeasurerCache,
+} from "react-virtualized";
+
 import "./CommentTable.css";
+
+let cache = new CellMeasurerCache({
+  fixedWidth: true,
+  minHeight: 50,
+});
 
 export const CommentTable = ({
   comments,
@@ -12,7 +23,27 @@ export const CommentTable = ({
   sortDirection,
   searchTerm,
 }) => {
+  useEffect(() => {
+    cache.clearAll();
+  }, [searchTerm, sortKey, sortDirection]);
   if (!comments) return null;
+  const renderRow = ({ index, key, style, parent }) => (
+    <CellMeasurer
+      key={key}
+      cache={cache}
+      parent={parent}
+      columnIndex={0}
+      rowIndex={index}
+    >
+      <CommentTableRow
+        highlight={searchTerm}
+        virtualListStyle={style}
+        virtualListIndex={index}
+        comment={comments[index]}
+      />
+    </CellMeasurer>
+  );
+
   return (
     <div className="comment-table">
       <div className="comment-table__header-row">
@@ -57,21 +88,23 @@ export const CommentTable = ({
           </button>
         </div>
       </div>
-      <VirtualList
-        width="100%"
-        height={500}
-        itemCount={comments.length || 0}
-        itemSize={50}
-        renderItem={({ index, style }) => (
-          <CommentTableRow
-            highlight={searchTerm}
-            virtualListIndex={index}
-            virtualListStyle={style}
-            key={comments[index].id}
-            comment={comments[index]}
-          />
-        )}
-      />
+      <div className="comment-table__body">
+        <AutoSizer>
+          {({ width, height }) => {
+            return (
+              <List
+                width={width}
+                height={height}
+                rowCount={comments.length}
+                deferredMeasurementCache={cache}
+                rowHeight={cache.rowHeight}
+                rowRenderer={renderRow}
+                overscanRowCount={3}
+              ></List>
+            );
+          }}
+        </AutoSizer>
+      </div>
     </div>
   );
 };
